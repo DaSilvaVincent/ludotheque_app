@@ -32,6 +32,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { FooterComponent } from './composants/footer/footer.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
+import {CreationJeuComponent} from "./composants/creation-jeu.component";
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
 
@@ -42,7 +43,8 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     LoginComponent,
     RegisterComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CreationJeuComponent
   ],
   imports: [
     BrowserModule,
