@@ -126,7 +126,7 @@ export class RegisterComponent {
       return;
     }
     this.authService.register(<RegisterRequest>{...this.registerForm.value}).pipe(
-      tap(() => this.router.navigate(['dashboard']))
+      tap(() => this.router.navigate(['accueil']))
     ).subscribe();
   }
 

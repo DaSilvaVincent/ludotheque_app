@@ -9,7 +9,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatLineModule} from "@angular/material/core";
 import {MatTableModule} from "@angular/material/table";
-import { DashboardComponent } from './dashboard.component';
+import { AccueilComponent } from './composants/accueil.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import localeFr from '@angular/common/locales/fr';
@@ -27,15 +27,22 @@ import { RegisterComponent } from './register.component';
 import {MatSelectModule} from "@angular/material/select";
 
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { FooterComponent } from './composants/footer/footer.component';
+import {MatMenuModule} from "@angular/material/menu";
+import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    AccueilComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FooterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,9 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     MatSnackBarModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatTooltipModule,
+    MatMenuModule,
   ],
   providers: [ToastService, MatIconRegistry, {
     provide: LOCALE_ID,

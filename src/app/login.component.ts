@@ -65,7 +65,7 @@ export class LoginComponent {
       return;
     }
     this.authService.login(this.email?.value, this.password?.value).pipe(
-      tap(() => this.router.navigate(['dashboard']))
+      tap(() => this.router.navigate(['accueil']))
     ).subscribe();
   }
 

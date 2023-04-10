@@ -3,10 +3,7 @@ import {BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, thro
 import {ANONYMOUS_USER, User} from "../../models/user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {UserInfo} from "../../models/userInfo";
-import {ToastService} from "./toast.service";
 import {Router} from "@angular/router";
-import {RegisterComponent} from "../register.component";
 import {RegisterRequest} from "../../models/interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -79,7 +76,7 @@ export class AuthService {
         console.log(err);
         this.userSubject.next(ANONYMOUS_USER);
         this.snackbar.open(`Enregistrement invalide ${err.error.message}` , 'Close', {
-          duration: 30000, horizontalPosition: 'right', verticalPosition: 'top'
+          duration: 3000, horizontalPosition: 'right', verticalPosition: 'top'
         })
         throw new Error(`register result : ${err}`)
       })
