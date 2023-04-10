@@ -1,27 +1,42 @@
 <div class="container">
   <p>
     <mat-toolbar color="primary">
-      <span>Gestion dépenses</span>
-      <button mat-raised-button routerLinkActive="mat-warn" aria-label="dashboard" [routerLink]="['/dashboard']">
+      <span>The best ludotheque</span>
+
+      <button mat-raised-button routerLinkActive="mat-warn" aria-label="accueil" [routerLink]="['/accueil']">
         <mat-icon>home</mat-icon>
         Accueil
       </button>
+
       <button *ngIf="auth.isLoggedOut$ | async" mat-raised-button routerLinkActive="mat-warn"[routerLink]="['/login']" >
         <mat-icon>login</mat-icon>
         Connexion
       </button>
+
       <button *ngIf="auth.isLoggedOut$ | async" mat-raised-button routerLinkActive="mat-warn"[routerLink]="['/register']" >
         <mat-icon>how_to_reg</mat-icon>
         Enregistrement
       </button>
+
       <button *ngIf="auth.isLoggedIn$ | async" mat-raised-button  (click)="logout()">
         <mat-icon>logout</mat-icon>
         Déconnexion
       </button>
+
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/profil']" >
+        <mat-icon>account_circle</mat-icon>
+        Profil
+      </button>
+
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/listeJeu']" >
+        <mat-icon>games</mat-icon>
+        Liste jeux
+      </button>
+        <a *ngIf="auth.user$ | async as user">{{ user.nom }}</a>
+        <a *ngIf="auth.user$ | async as user">{{ user.prenom }}</a>
     </mat-toolbar>
   </p>
   <router-outlet></router-outlet>
-  <!--
-    <app-show-messages></app-show-messages>
-  -->
+  <app-footer></app-footer>
 </div>
+
