@@ -11,7 +11,7 @@ export class JeuxService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getJeux():
+  accueilJeux():
     Observable<Jeu[]> {
     const url = 'http://127.0.0.1:8000/api/jeu/indexVisiteur';
     const httpOptions = {
