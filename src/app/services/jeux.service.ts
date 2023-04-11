@@ -77,7 +77,7 @@ export class JeuxService {
 
 
 
-
+/*
   updateJeu(request: JeuRequest,id: number): Observable<Jeu[]> {
     const url = `${environment.apiUrl}/jeu/updateJeu/${id}`;
     const httpOptions = {
@@ -118,5 +118,5 @@ export class JeuxService {
           throw new Error(`update result : ${err}`)
         })
       )
-  }
+  }*/
 }
