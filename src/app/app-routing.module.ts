@@ -5,6 +5,7 @@ import {LoginComponent} from "./login.component";
 import {RegisterComponent} from "./register.component";
 import {PageNotFoundComponent} from "./composants/page-not-found/page-not-found.component";
 import {CreationJeuComponent} from "./composants/creation-jeu.component";
+import {ModificationJeuComponent} from "./composants/modification-jeu.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil', pathMatch: 'full'},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'creationJeu', component: CreationJeuComponent},
+  {path: 'modificationJeu/:id', component: ModificationJeuComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

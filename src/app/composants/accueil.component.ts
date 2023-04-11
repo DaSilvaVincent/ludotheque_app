@@ -63,7 +63,9 @@ import {Jeu} from "../../models/jeu";
     </table>
 
   `,
-  styleUrls: ['./accueil.component.css']
+  styles: [
+    ':host { display: flex; justify-content: center; margin: 100px 0;}',
+  ]
 })
 export class AccueilComponent implements OnInit {
 

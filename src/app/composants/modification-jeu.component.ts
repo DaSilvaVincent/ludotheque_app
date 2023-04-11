@@ -1,22 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {tap} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 import {JeuxService} from "../services/jeux.service";
 import {JeuRequest} from "../../models/JeuRequest";
+import {BehaviorSubject, Observable, Subscription, tap} from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Jeu} from "../../models/jeu";
+import {DataSource} from "@angular/cdk/collections";
 
 @Component({
-  selector: 'app-creation-jeu',
+  selector: 'app-modification-jeu',
   template: `
     <div>
       <mat-card>
-        <mat-card-title>Creation Jeu</mat-card-title>
+        <mat-card-title>Modification Jeu</mat-card-title>
 
         <mat-card-content>
-          <form [formGroup]="creationForm" (ngSubmit)="create()">
+          <form [formGroup]="updateForm" (ngSubmit)="update()" (reset)="annuler()">
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Nom" formControlName="nom">
+              <input type="text" matInput placeholder="Nom" formControlName="nom" value="{{this.infos_jeu.nom}}">
               <mat-error
                 *ngIf="nom?.touched && nom?.hasError('required')">
                 Le nom est obligatoire
@@ -28,7 +30,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Description" formControlName="description">
+              <input type="text" matInput placeholder="Description" formControlName="description" value="{{this.infos_jeu.description}}">
               <mat-error
                 *ngIf="description?.touched && description?.hasError('required')">
                 La description est obligatoire
@@ -40,7 +42,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Langue" formControlName="langue">
+              <input type="text" matInput placeholder="Langue" formControlName="langue" value="{{this.infos_jeu.langue}}">
               <mat-error
                 *ngIf="langue?.touched && langue?.hasError('required')">
                 La langue est obligatoire
@@ -48,7 +50,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Age minimum" formControlName="age_min">
+              <input type="int" matInput placeholder="Age minimum" formControlName="age_min" value="{{this.infos_jeu.age_min}}">
               <mat-error
                 *ngIf="age_min?.touched && age_min?.hasError('required')">
                 L'age minimum est obligatoire
@@ -60,7 +62,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Nombre de joueurs minimum" formControlName="nombre_joueurs_min">
+              <input type="int" matInput placeholder="Nombre de joueurs minimum" formControlName="nombre_joueurs_min" value="{{this.infos_jeu.nombre_joueurs_min}}">
               <mat-error
                 *ngIf="nombre_joueurs_min?.touched && nombre_joueurs_min?.hasError('required')">
                 Le nombre de joueurs minimum est obligatoire
@@ -72,7 +74,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Nombre de joueurs maximum" formControlName="nombre_joueurs_max">
+              <input type="int" matInput placeholder="Nombre de joueurs maximum" formControlName="nombre_joueurs_max" value="{{this.infos_jeu.nombre_joueurs_max}}">
               <mat-error
                 *ngIf="nombre_joueurs_max?.touched && nombre_joueurs_max?.hasError('required')">
                 Le nombre de joueurs maximum est obligatoire
@@ -84,7 +86,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="duree d'une partie" formControlName="duree_partie">
+              <input type="text" matInput placeholder="duree d'une partie" formControlName="duree_partie" value="{{this.infos_jeu.duree_partie}}">
               <mat-error
                 *ngIf="duree_partie?.touched && duree_partie?.hasError('required')">
                 La duree d'une partie est obligatoire
@@ -92,7 +94,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant de la categorie du jeu" formControlName="categorie_id">
+              <input type="int" matInput placeholder="l'identifiant de la categorie du jeu" formControlName="categorie_id" value="{{this.infos_jeu.categorie_id}}">
               <mat-error
                 *ngIf="categorie_id?.touched && categorie_id?.hasError('required')">
                 L'identifiant de la categorie du jeu est obligatoire
@@ -100,7 +102,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant du theme du jeu" formControlName="theme_id">
+              <input type="int" matInput placeholder="l'identifiant du theme du jeu" formControlName="theme_id" value="{{this.infos_jeu.theme_id}}">
               <mat-error
                 *ngIf="theme_id?.touched && theme_id?.hasError('required')">
                 L'identifiant du theme du jeu est obligatoire
@@ -108,7 +110,7 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant de l'editeur du jeu" formControlName="editeur_id">
+              <input type="int" matInput placeholder="l'identifiant de l'editeur du jeu" formControlName="editeur_id" value="{{this.infos_jeu.editeur_id}}">
               <mat-error
                 *ngIf="editeur_id?.touched && editeur_id?.hasError('required')">
                 L'identifiant de l'editeur du jeu est obligatoire
@@ -116,8 +118,9 @@ import {JeuRequest} from "../../models/JeuRequest";
             </mat-form-field>
 
             <div class="button">
-              <!-- Button is disabled(not clickable), if our RegisterForm contains Validation Errors -->
-              <button type="submit" mat-button [disabled]="!creationForm.valid">Creation</button>
+              <button type="reset" mat-button>Annuler</button>
+              <!-- Button is disabled(not clickable), if our updateForm contains Validation Errors -->
+              <button type="submit" mat-button [disabled]="!updateForm.valid">Modification</button>
             </div>
 
           </form>
@@ -134,65 +137,82 @@ import {JeuRequest} from "../../models/JeuRequest";
     '.button { display: flex; justify-content: flex-end;}'
   ]
 })
-export class CreationJeuComponent implements OnInit{
-  creationForm = new FormGroup({
-      nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
-      description: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]),
-      langue: new FormControl('', [Validators.required]),
-      age_min: new FormControl('', [Validators.required, Validators.min(4), Validators.max(18)]),
-      nombre_joueurs_min: new FormControl('', [Validators.required, Validators.min(1), Validators.max(4)]),
-      nombre_joueurs_max: new FormControl('', [Validators.required, Validators.min(5), Validators.max(8)]),
-      duree_partie: new FormControl('', [Validators.required]),
-      categorie_id: new FormControl('', [Validators.required]),
-      theme_id: new FormControl('', [Validators.required]),
-      editeur_id: new FormControl('', [Validators.required])
-    },
-  )
+export class ModificationJeuComponent implements OnInit{
 
-  constructor(private router: Router,private jeuService: JeuxService) {
+  id: number = +(this.route.snapshot.paramMap.get('id') || 0);
+
+  infos_jeu = <Jeu>{}
+  le_jeu:Observable<Jeu>
+
+  updateForm = <FormGroup>{}
+
+  constructor(private route: ActivatedRoute,private router: Router,private jeuService: JeuxService) {
+    this.le_jeu = this.jeuService.getJeu(this.id)
+    this.le_jeu.subscribe(value => {
+      this.updateForm = new FormGroup({
+          nom: new FormControl(value.nom, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
+          description: new FormControl(value.description, [Validators.required, Validators.minLength(5), Validators.maxLength(500)]),
+          langue: new FormControl(value.langue, [Validators.required]),
+          age_min: new FormControl(value.age_min, [Validators.required, Validators.min(4), Validators.max(18)]),
+          nombre_joueurs_min: new FormControl(value.nombre_joueurs_min, [Validators.required, Validators.min(1), Validators.max(4)]),
+          nombre_joueurs_max: new FormControl(value.nombre_joueurs_max, [Validators.required, Validators.min(5), Validators.max(8)]),
+          duree_partie: new FormControl(value.duree_partie, [Validators.required]),
+          categorie_id: new FormControl(value.categorie_id, [Validators.required]),
+          theme_id: new FormControl(value.theme_id, [Validators.required]),
+          editeur_id: new FormControl(value.editeur_id, [Validators.required])
+        }
+      )
+
+    })
+
   }
 
   ngOnInit(): void {
   }
 
-  create() {
-    if (!this.creationForm.valid) {
+  update() {
+    if (!this.updateForm.valid) {
       return;
     }
-    this.jeuService.createJeu(<JeuRequest><unknown>{...this.creationForm.value}).pipe(
+    this.jeuService.updateJeu(<JeuRequest><unknown>{...this.updateForm.value},this.id).pipe(
       tap(() => this.router.navigate(['listeJeu']))
     ).subscribe();
   }
 
+  annuler() {
+    this.router.navigate(['listeJeu'])
+  }
+
   get nom() {
-    return this.creationForm.get('nom');
+    return this.updateForm.get('nom');
   }
   get description() {
-    return this.creationForm.get('description');
+    return this.updateForm.get('description');
   }
   get langue() {
-    return this.creationForm.get('langue');
+    return this.updateForm.get('langue');
   }
   get age_min() {
-    return this.creationForm.get('age_min');
+    return this.updateForm.get('age_min');
   }
   get nombre_joueurs_min() {
-    return this.creationForm.get('nombre_joueurs_min');
+    return this.updateForm.get('nombre_joueurs_min');
   }
   get nombre_joueurs_max() {
-    return this.creationForm.get('nombre_joueurs_max');
+    return this.updateForm.get('nombre_joueurs_max');
   }
   get duree_partie() {
-    return this.creationForm.get('duree_partie');
+    return this.updateForm.get('duree_partie');
   }
   get categorie_id() {
-    return this.creationForm.get('categorie_id');
+    return this.updateForm.get('categorie_id');
   }
   get theme_id() {
-    return this.creationForm.get('categorie_id');
+    return this.updateForm.get('categorie_id');
   }
   get editeur_id() {
-    return this.creationForm.get('categorie_id');
+    return this.updateForm.get('categorie_id');
   }
+
 
 }
