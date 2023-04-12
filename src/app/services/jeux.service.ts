@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, map, Observable, of, shareReplay} from "rxjs";
+import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
 import {Jeu} from "../../models/jeu";
 import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
@@ -46,7 +46,6 @@ export class JeuxService {
       params: params
     };
     return this.http.get<any>(url, httpOptions).pipe(
-      tap(rep => console.log(rep)),
       map(res => res.jeux),
       catchError(err => {
         console.log('Erreur http : ', err);

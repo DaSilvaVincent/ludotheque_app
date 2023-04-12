@@ -22,7 +22,7 @@ import {JeuRequest} from "../../models/JeuRequest";
                 Le nom est obligatoire
               </mat-error>
               <mat-error
-                *ngIf="nom?.hasError('minLength') || nom?.hasError('maxLength')">
+                *ngIf="nom?.hasError('minlength') || nom?.hasError('maxlength')">
                 Le nom doit etre compris entre 5 et 50 caracteres
               </mat-error>
             </mat-form-field>
@@ -34,7 +34,7 @@ import {JeuRequest} from "../../models/JeuRequest";
                 La description est obligatoire
               </mat-error>
               <mat-error
-                *ngIf="description?.hasError('minLength') || description?.hasError('maxLength')">
+                *ngIf="description?.hasError('minlength') || description?.hasError('maxlength')">
                 La description doit etre compris entre 5 et 500 caracteres
               </mat-error>
             </mat-form-field>

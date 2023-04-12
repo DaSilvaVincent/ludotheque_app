@@ -39,6 +39,22 @@ import {Jeu} from "../../../models/jeu";
         <td mat-cell *matCellDef="let element"> {{element.theme_id}}  </td>
       </ng-container>
 
+      <!-- modification Column -->
+      <ng-container matColumnDef="modification">
+        <th mat-header-cell *matHeaderCellDef>modification</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon [routerLink]="['/modificationJeu', element.id]">loop</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- modif url_media Column -->
+      <ng-container matColumnDef="modif url_media">
+        <th mat-header-cell *matHeaderCellDef>url_media</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon [routerLink]="['/imageUpload', element.id]">add_photo_alternate</mat-icon>
+        </td>
+      </ng-container>
+
       <!-- La ligne -->
       <tr mat-header-row *matHeaderRowDef="lesColonnes"></tr>
       <tr mat-row *matRowDef="let row; columns: lesColonnes;"></tr>
@@ -51,12 +67,10 @@ import {Jeu} from "../../../models/jeu";
 export class TableauJeuComponent implements OnInit {
 
   les_jeux: Jeu [] = [];
-  //les_jeux$: Observable<Jeu[]>
-  lesColonnes = ["nom","description","langue","categorie_id","theme_id"]
+  lesColonnes = ["nom","description","langue","categorie_id","theme_id","modification","modif url_media"]
   dataSource: DataSourceAsynchro = new DataSourceAsynchro(this.jeuxService)
 
   constructor(public jeuxService:JeuxService) {
-    //this.les_jeux$ = jeuxService.getJeux()
   }
 
   ngOnInit(): void {
@@ -84,7 +98,6 @@ class DataSourceAsynchro extends DataSource<Jeu> {
   setData() {
     this.jeuxService.getJeux('asc',2).subscribe(jeux => {
       this.jeuxSubject.next(jeux)
-      console.log("in setdata",jeux)
     });
  }
 }
