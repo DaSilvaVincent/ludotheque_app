@@ -23,7 +23,7 @@
         Déconnexion
       </button>
 
-      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/profil']" >
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/profil',auth.userValue.id]" >
         <mat-icon>account_circle</mat-icon>
         Profil
       </button>

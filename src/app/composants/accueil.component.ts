@@ -63,7 +63,7 @@ import {Jeu} from "../../models/jeu";
     </table>
 
   `,
-  styleUrls: ['./accueil.component.css']
+  styles:[],
 })
 export class AccueilComponent implements OnInit {
 
