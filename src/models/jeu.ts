@@ -9,4 +9,6 @@ export interface Jeu {
   nombre_joueur_max: number;
   duree_partie: string;
   valide: boolean;
+  categorie_id: number;
+  theme_id: number;
 }

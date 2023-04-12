@@ -1,31 +1,56 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, Observable, of} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
 import {Jeu} from "../../models/jeu";
 import {AuthService} from "./auth.service";
+import {environment} from "../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
 })
 export class JeuxService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) {
+  }
 
-  getJeux():
-    Observable<Jeu[]> {
+  accueilJeux(): Observable<Jeu[]> {
     const url = 'http://127.0.0.1:8000/api/jeu/indexVisiteur';
     const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer '+this.authService.userValue.jwtToken})
+        'Authorization': 'Bearer ' + this.authService.userValue.jwtToken
+      })
     };
-    return this.http.get<any>(url, httpOptions)
-      .pipe(
-        map(res => res.jeux),
-        catchError(err => {
-          console.log('Erreur http : ', err);
-          return of([]);
-        }),
-      );
+    return this.http.get<any>(url, httpOptions).pipe(
+      map(res => res.jeux),
+      catchError(err => {
+        console.log('Erreur http : ', err);
+        return of([]);
+      }),
+    );
+  }
+
+  getJeux(sort: string = 'asc', nb_joueur_min: number = 2): Observable<Jeu[]> {
+    const url = 'http://127.0.0.1:8000/api/jeu/indexAdherent';
+    let params = new HttpParams();
+    params = params.append('sort', sort);
+    params = params.append('nb_joueur_min', nb_joueur_min);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        //'Authorization': 'Bearer ' + this.authService.userValue.jwtToken
+      }),
+      params: params
+    };
+    return this.http.get<any>(url, httpOptions).pipe(
+      tap(rep => console.log(rep)),
+      map(res => res.jeux),
+      catchError(err => {
+        console.log('Erreur http : ', err);
+        return of([]);
+      }),
+    );
   }
 }
