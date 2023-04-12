@@ -32,8 +32,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { FooterComponent } from './composants/footer/footer.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
+import {CreationJeuComponent} from "./composants/creation-jeu.component";
+import {ModificationJeuComponent} from "./composants/modification-jeu.component";
+import {ImageUploadComponent} from "./composants/image-upload.component";
 import { TableauJeuComponent } from './composants/tableau-jeu/tableau-jeu.component';
 import { CarteJeuComponent } from './composants/carte-jeu/carte-jeu.component';
+
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
 
@@ -45,6 +49,9 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     RegisterComponent,
     FooterComponent,
     PageNotFoundComponent,
+    CreationJeuComponent,
+    ModificationJeuComponent,
+    ImageUploadComponent
     TableauJeuComponent,
     CarteJeuComponent
   ],
