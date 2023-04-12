@@ -34,6 +34,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
 import {CreationJeuComponent} from "./composants/creation-jeu.component";
 import {ModificationJeuComponent} from "./composants/modification-jeu.component";
+import {ImageUploadComponent} from "./composants/image-upload.component";
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
 
@@ -46,7 +47,8 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     FooterComponent,
     PageNotFoundComponent,
     CreationJeuComponent,
-    ModificationJeuComponent
+    ModificationJeuComponent,
+    ImageUploadComponent
   ],
   imports: [
     BrowserModule,
