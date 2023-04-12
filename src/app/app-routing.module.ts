@@ -7,6 +7,8 @@ import {PageNotFoundComponent} from "./composants/page-not-found/page-not-found.
 import {CreationJeuComponent} from "./composants/creation-jeu.component";
 import {ModificationJeuComponent} from "./composants/modification-jeu.component";
 import {ImageUploadComponent} from "./composants/image-upload.component";
+import {TableauJeuComponent} from "./composants/tableau-jeu/tableau-jeu.component";
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil', pathMatch: 'full'},
@@ -16,6 +18,7 @@ const routes: Routes = [
   {path: 'creationJeu', component: CreationJeuComponent},
   {path: 'modificationJeu/:id', component: ModificationJeuComponent},
   {path: 'imageUpload/:id', component: ImageUploadComponent},
+  {path: 'listeJeu', component: TableauJeuComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

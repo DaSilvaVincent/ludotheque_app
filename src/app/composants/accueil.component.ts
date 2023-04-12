@@ -73,7 +73,7 @@ export class AccueilComponent implements OnInit {
   lesColonnes = ["id","nom","description","langue","age_min","nb_joueurs_min","nb_joueurs_max","duree_partie"]
   dataSource = new DataSourceAsynchro(this.jeuxService)
   constructor(public jeuxService:JeuxService) {
-    this.les_jeux = this.jeuxService.getJeux()
+    this.les_jeux = this.jeuxService.accueilJeux()
   }
 
   ngOnInit(): void {
@@ -99,10 +99,8 @@ class DataSourceAsynchro extends DataSource<Jeu> {
   }
 
   setData(sort = 0, search = '') {
-
-    this.jeuxService.getJeux().pipe().subscribe(jeux => {
+    this.jeuxService.accueilJeux().pipe().subscribe(jeux => {
       this.jeuxSubject.next(jeux)
     });
-
   }
 }
