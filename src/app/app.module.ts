@@ -51,7 +51,7 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     PageNotFoundComponent,
     CreationJeuComponent,
     ModificationJeuComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
     TableauJeuComponent,
     CarteJeuComponent
   ],

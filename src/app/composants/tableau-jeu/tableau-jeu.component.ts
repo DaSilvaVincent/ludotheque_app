@@ -90,11 +90,16 @@ export class DataSourceAsynchro extends DataSource<Jeu> {
       console.log("in setdata",jeux)
     });
  }
- setCommentaire(){
-   this.jeuxService.noteJeu(9).subscribe(note => {
-     // @ts-ignore
-     this.jeuxSubject.next(note)
-     console.log("in setdata",note)
+  setNote(){
+    this.jeuxService.noteJeu(4).subscribe(note=> {
+      this.jeuxSubject.next(note)
+      console.log("in setdata",note)
+    });
+  }
+ setNbLike(){
+   this.jeuxService.nblike(4).subscribe(nb => {
+     this.jeuxSubject.next(nb)
+     console.log("in setdata",nb)
    });
  }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Jeu} from '../../../models/jeu';
 import {JeuxService} from '../../services/jeux.service';
 import {ActivatedRoute} from "@angular/router";
@@ -21,9 +21,11 @@ import {DataSourceAsynchro} from "../tableau-jeu/tableau-jeu.component";
           <span class="categorie"> Catégorie: {{jeu.categorie_id}}</span>
         </mat-card-content>
         <span class="theme"> Thème: {{jeu.theme_id}}</span>
-      </mat-card>
+        <span class="like"> likes: {{le_jeu}}</span>
 
+      </mat-card>
     </div>
+
   `,
   styles: [
     `.card {
@@ -37,19 +39,18 @@ import {DataSourceAsynchro} from "../tableau-jeu/tableau-jeu.component";
 })
 export class CarteJeuComponent implements OnInit {
   jeux$: Observable<Jeu[]> | undefined;
-  le_jeu: Observable<number> | undefined;
+  le_jeu: Observable<Jeu[]> | undefined;
   id: number = +(this.route.snapshot.paramMap.get('id') || 0);
 
   dataSource: DataSourceAsynchro = new DataSourceAsynchro(this.jeuxService)
-
+  private jeuxSubject = new BehaviorSubject<Jeu[]>([]);
 
   constructor(private jeuxService: JeuxService,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.jeux$= this.jeuxService.getJeux('asc', 2);
-    this.le_jeu = this.jeuxService.noteJeu(this.id);
-    this.dataSource = new DataSourceAsynchro(this.jeuxService)
-    this.dataSource.setCommentaire();
+    this.dataSource.setNbLike();
+    this.le_jeu= this.jeuxService.nblike(this.id);
   }
 
 }

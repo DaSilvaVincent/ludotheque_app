@@ -12,4 +12,5 @@ export interface Jeu {
   categorie_id: number;
   theme_id: number;
   editeur_id: number;
+  nb_likes: number;
 }
