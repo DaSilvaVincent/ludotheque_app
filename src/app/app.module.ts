@@ -33,6 +33,7 @@ import { FooterComponent } from './composants/footer/footer.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
 import { TableauJeuComponent } from './composants/tableau-jeu/tableau-jeu.component';
+import { CarteJeuComponent } from './composants/carte-jeu/carte-jeu.component';
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
 
@@ -44,7 +45,8 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     RegisterComponent,
     FooterComponent,
     PageNotFoundComponent,
-    TableauJeuComponent
+    TableauJeuComponent,
+    CarteJeuComponent
   ],
   imports: [
     BrowserModule,
