@@ -97,10 +97,8 @@ class DataSourceAsynchro extends DataSource<Jeu> {
   }
 
   setData(sort = 0, search = '') {
-
     this.jeuxService.accueilJeux().pipe().subscribe(jeux => {
       this.jeuxSubject.next(jeux)
     });
-
   }
 }
