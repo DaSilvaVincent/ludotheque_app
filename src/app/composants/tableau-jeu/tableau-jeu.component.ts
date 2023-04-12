@@ -3,6 +3,8 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 import {JeuxService} from "../../services/jeux.service";
 import {DataSource} from "@angular/cdk/collections";
 import {Jeu} from "../../../models/jeu";
+import {ActivatedRoute} from "@angular/router";
+
 
 @Component({
   selector: 'app-tableau-jeu',
@@ -66,8 +68,9 @@ export class TableauJeuComponent implements OnInit {
 
 }
 
-class DataSourceAsynchro extends DataSource<Jeu> {
+export class DataSourceAsynchro extends DataSource<Jeu> {
   private jeuxSubject = new BehaviorSubject<Jeu[]>([]);
+
 
   constructor(private jeuxService: JeuxService) {
     super();
@@ -86,6 +89,13 @@ class DataSourceAsynchro extends DataSource<Jeu> {
       this.jeuxSubject.next(jeux)
       console.log("in setdata",jeux)
     });
+ }
+ setCommentaire(){
+   this.jeuxService.noteJeu(9).subscribe(note => {
+     // @ts-ignore
+     this.jeuxSubject.next(note)
+     console.log("in setdata",note)
+   });
  }
 }
 
