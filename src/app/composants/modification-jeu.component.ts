@@ -18,7 +18,7 @@ import {DataSource} from "@angular/cdk/collections";
           <form [formGroup]="updateForm" (ngSubmit)="update()" (reset)="annuler()">
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Nom" formControlName="nom" value="{{this.infos_jeu.nom}}">
+              <input type="text" matInput placeholder="Nom" formControlName="nom" >
               <mat-error
                 *ngIf="nom?.touched && nom?.hasError('required')">
                 Le nom est obligatoire
@@ -30,7 +30,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Description" formControlName="description" value="{{this.infos_jeu.description}}">
+              <input type="text" matInput placeholder="Description" formControlName="description" >
               <mat-error
                 *ngIf="description?.touched && description?.hasError('required')">
                 La description est obligatoire
@@ -42,7 +42,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="Langue" formControlName="langue" value="{{this.infos_jeu.langue}}">
+              <input type="text" matInput placeholder="Langue" formControlName="langue" >
               <mat-error
                 *ngIf="langue?.touched && langue?.hasError('required')">
                 La langue est obligatoire
@@ -50,7 +50,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Age minimum" formControlName="age_min" value="{{this.infos_jeu.age_min}}">
+              <input type="int" matInput placeholder="Age minimum" formControlName="age_min" >
               <mat-error
                 *ngIf="age_min?.touched && age_min?.hasError('required')">
                 L'age minimum est obligatoire
@@ -62,7 +62,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Nombre de joueurs minimum" formControlName="nombre_joueurs_min" value="{{this.infos_jeu.nombre_joueurs_min}}">
+              <input type="int" matInput placeholder="Nombre de joueurs minimum" formControlName="nombre_joueurs_min" >
               <mat-error
                 *ngIf="nombre_joueurs_min?.touched && nombre_joueurs_min?.hasError('required')">
                 Le nombre de joueurs minimum est obligatoire
@@ -74,7 +74,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="Nombre de joueurs maximum" formControlName="nombre_joueurs_max" value="{{this.infos_jeu.nombre_joueurs_max}}">
+              <input type="int" matInput placeholder="Nombre de joueurs maximum" formControlName="nombre_joueurs_max" >
               <mat-error
                 *ngIf="nombre_joueurs_max?.touched && nombre_joueurs_max?.hasError('required')">
                 Le nombre de joueurs maximum est obligatoire
@@ -86,7 +86,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="text" matInput placeholder="duree d'une partie" formControlName="duree_partie" value="{{this.infos_jeu.duree_partie}}">
+              <input type="text" matInput placeholder="duree d'une partie" formControlName="duree_partie" >
               <mat-error
                 *ngIf="duree_partie?.touched && duree_partie?.hasError('required')">
                 La duree d'une partie est obligatoire
@@ -94,7 +94,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant de la categorie du jeu" formControlName="categorie_id" value="{{this.infos_jeu.categorie_id}}">
+              <input type="int" matInput placeholder="l'identifiant de la categorie du jeu" formControlName="categorie_id" >
               <mat-error
                 *ngIf="categorie_id?.touched && categorie_id?.hasError('required')">
                 L'identifiant de la categorie du jeu est obligatoire
@@ -102,7 +102,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant du theme du jeu" formControlName="theme_id" value="{{this.infos_jeu.theme_id}}">
+              <input type="int" matInput placeholder="l'identifiant du theme du jeu" formControlName="theme_id" >
               <mat-error
                 *ngIf="theme_id?.touched && theme_id?.hasError('required')">
                 L'identifiant du theme du jeu est obligatoire
@@ -110,7 +110,7 @@ import {DataSource} from "@angular/cdk/collections";
             </mat-form-field>
 
             <mat-form-field>
-              <input type="int" matInput placeholder="l'identifiant de l'editeur du jeu" formControlName="editeur_id" value="{{this.infos_jeu.editeur_id}}">
+              <input type="int" matInput placeholder="l'identifiant de l'editeur du jeu" formControlName="editeur_id" >
               <mat-error
                 *ngIf="editeur_id?.touched && editeur_id?.hasError('required')">
                 L'identifiant de l'editeur du jeu est obligatoire
@@ -141,7 +141,6 @@ export class ModificationJeuComponent implements OnInit{
 
   id: number = +(this.route.snapshot.paramMap.get('id') || 0);
 
-  infos_jeu = <Jeu>{}
   le_jeu:Observable<Jeu>
 
   updateForm = <FormGroup>{}

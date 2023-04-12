@@ -2,6 +2,7 @@ export interface JeuRequest {
   id: number;
   nom: string;
   description: string;
+  url_media: string
   langue: string;
   age_min: number;
   nombre_joueurs_min: number;

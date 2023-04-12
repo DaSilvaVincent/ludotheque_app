@@ -42,6 +42,11 @@
         <mat-icon>loop</mat-icon>
         Modification jeu
       </button>
+
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/imageUpload/0']" >
+        <mat-icon>loop</mat-icon>
+        Modification url
+      </button>
         <a *ngIf="auth.user$ | async as user">{{ user.nom }}</a>
         <a *ngIf="auth.user$ | async as user">{{ user.prenom }}</a>
     </mat-toolbar>

@@ -19,8 +19,8 @@ export class JeuxService {
     const url = `${environment.apiUrl}/jeu/indexVisiteur`;
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+this.authService.userValue.jwtToken})
+        'Accept': 'application/json'
+      })
     };
     return this.http.get<any>(url, httpOptions)
       .pipe(
@@ -37,8 +37,8 @@ export class JeuxService {
     const url = `${environment.apiUrl}/jeu/showJeu/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+this.authService.userValue.jwtToken})
+        'Accept': 'application/json'
+        })
     };
     return this.http.get<any>(url, httpOptions)
       .pipe(
@@ -51,12 +51,6 @@ export class JeuxService {
   }
 
   updateJeu(request: JeuRequest,id: number): Observable<Jeu[]> {
-    const url = `${environment.apiUrl}/jeu/updateJeu/${id}`;
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+this.authService.userValue.jwtToken})
-    };
     return this.http.put<any>(`${environment.apiUrl}/jeu/updateJeu/${id}`,{
       nom: request.nom,
       description: request.description,
@@ -70,8 +64,8 @@ export class JeuxService {
       editeur_id: request.editeur_id
       },{
         headers: new HttpHeaders({'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer '+this.authService.userValue.jwtToken})
+          'Accept': 'application/json'
+          })
       })
       .pipe(
         map(rep => {
@@ -125,5 +119,32 @@ export class JeuxService {
         throw new Error(`create result : ${err}`)
       })
     )
+  }
+
+  uploadMedia(url_media: string, id: number) {
+    return this.http.put<any>(`${environment.apiUrl}/jeu/updateUrl/${id}`,{
+      url_media: url_media
+    },{
+      headers: new HttpHeaders({'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    })
+      .pipe(
+        map(rep => {
+          const url_media = {...rep};
+          this.snackbar.open(`Modification de l'url du jeu avec succes`, 'Close', {
+            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+          })
+          return url_media;
+        }),
+        shareReplay(),
+        catchError(err => {
+          console.log(err);
+          this.snackbar.open(`Modification de l'url du jeu invalide ${err.error.message}` , 'Close', {
+            duration: 3000, horizontalPosition: 'right', verticalPosition: 'top'
+          })
+          throw new Error(`update result : ${err}`)
+        })
+      )
   }
 }
