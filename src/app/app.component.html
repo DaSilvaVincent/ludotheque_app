@@ -32,6 +32,11 @@
         <mat-icon>games</mat-icon>
         Liste jeux
       </button>
+
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/creationJeu']" >
+        <mat-icon>library_add</mat-icon>
+        Creation jeu
+      </button>
         <a *ngIf="auth.user$ | async as user">{{ user.nom }}</a>
         <a *ngIf="auth.user$ | async as user">{{ user.prenom }}</a>
     </mat-toolbar>
