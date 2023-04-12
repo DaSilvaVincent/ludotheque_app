@@ -75,7 +75,23 @@ export class JeuxService {
     );
   }
 
-
+  noteJeu(id: number): Observable<any> {
+    const url = `http://127.0.0.1:8000/api/jeu/showJeu/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authService.userValue.jwtToken
+      }),
+    };
+    return this.http.post(url, null, httpOptions).pipe(
+      tap(res => console.log('note added successfully')),
+      catchError(err => {
+        console.log('Erreur http : ', err);
+        return of([]);
+      }),
+    );
+  }
 
 /*
   updateJeu(request: JeuRequest,id: number): Observable<Jeu[]> {

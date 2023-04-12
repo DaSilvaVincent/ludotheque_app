@@ -80,7 +80,7 @@ class DataSourceAsynchro extends DataSource<Jeu> {
   }
 
   setData() {
-      this.jeuxService.getJeux('asc',4)
+      this.jeuxService.getJeux()
       .subscribe(jeux => this.jeuxSubject.next(jeux));
   }
 }
