@@ -42,8 +42,8 @@
         <mat-icon>library_add</mat-icon>
         Creation jeu
       </button>
-        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.nom }}</a>
-        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.prenom }}</a>
+        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.nom}} </a>
+        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.prenom}}</a>
         <a *ngIf="auth.isLoggedIn$ | async" ><img src="http://localhost:8000/storage/public/{{auth.userValue.avatar}}"></a>
     </mat-toolbar>
   </p>

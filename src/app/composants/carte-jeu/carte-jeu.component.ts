@@ -16,7 +16,7 @@ import {Commentaires} from "../../../models/commentaires";
           <mat-card-title>{{ jeu.jeu.nom }}</mat-card-title>
           <mat-card-subtitle>Langue: {{jeu.jeu.langue | slice:0:2 }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-lg-image [src]="jeu.jeu.url_media" [alt]="jeu.jeu.nom">
+        <img mat-card-lg-image [src]="'http://localhost:8000/storage/public/' + jeu.jeu.url_media" [alt]="jeu.jeu.nom">
         <mat-card-content>
           <br>
           <span class="categorie"> Catégorie: {{jeu.jeu.categorie_id}}</span>

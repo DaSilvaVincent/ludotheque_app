@@ -83,9 +83,6 @@ import {CustomValidators} from "../services/customValidator";
             </mat-error>
           </mat-form-field>
 
-          <p>Avatar :</p>
-          <app-modification-avatar-profil></app-modification-avatar-profil>
-
           <mat-form-field>
             <input type="password" matInput placeholder="Password" formControlName="password" value="{{this.infosUser.password}}">
             <mat-error
