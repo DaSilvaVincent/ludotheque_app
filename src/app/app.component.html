@@ -33,6 +33,11 @@
         Liste jeux
       </button>
 
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/carteJeu']" >
+        <mat-icon>games</mat-icon>
+        Carte jeux
+      </button>
+
       <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/creationJeu']" >
         <mat-icon>library_add</mat-icon>
         Creation jeu

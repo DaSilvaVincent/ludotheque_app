@@ -10,6 +10,7 @@ import {CreationJeuComponent} from "./composants/creation-jeu.component";
 import {ModificationJeuComponent} from "./composants/modification-jeu.component";
 import {ImageUploadComponent} from "./composants/image-upload.component";
 import {TableauJeuComponent} from "./composants/tableau-jeu/tableau-jeu.component";
+import {CarteJeuComponent} from "./composants/carte-jeu/carte-jeu.component";
 import {ModificationAvatarProfilComponent} from "./modification-avatar-profil/modification-avatar-profil.component";
 import {DetailsJeuComponent} from "./composants/details-jeu.component";
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'modificationJeu/:id', component: ModificationJeuComponent},
   {path: 'imageUpload/:id', component: ImageUploadComponent},
   {path: 'listeJeu', component: TableauJeuComponent},
+  {path: 'carteJeu', component: CarteJeuComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

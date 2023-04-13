@@ -17,6 +17,7 @@ export interface Jeu {
   editeur_id: number;
   nb_likes: number;
   jeu:Jeu
+  note: number
   achats:Achats[]
   commentaires:Commentaires[]
 }

@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, of, tap} from "rxjs";
 import {JeuxService} from "../../services/jeux.service";
 import {DataSource} from "@angular/cdk/collections";
 import {Jeu} from "../../../models/jeu";
+import {ActivatedRoute} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -152,8 +153,9 @@ export class TableauJeuComponent implements OnInit {
   }
 }
 
-class DataSourceAsynchro extends DataSource<Jeu> {
+export class DataSourceAsynchro extends DataSource<Jeu> {
   private jeuxSubject = new BehaviorSubject<Jeu[]>([]);
+
 
   constructor(private jeuxService: JeuxService) {
     super();
@@ -171,8 +173,13 @@ class DataSourceAsynchro extends DataSource<Jeu> {
     this.jeuxService.getJeux(sort, age_min, nb_joueur_min).subscribe(jeux => {
       this.jeuxSubject.next(jeux)
     });
-  }
+ }
 
+  setNbLike(){
+   this.jeuxService.nblike(4).subscribe(nb => {
+     this.jeuxSubject.next(nb)
+   });
+ }
 }
 
 
