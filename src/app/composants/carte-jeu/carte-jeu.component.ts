@@ -57,7 +57,7 @@ note: number | undefined
   }
 
   ngOnInit(): void {
-    this.jeux$ = this.jeuxService.getJeux('asc', 2);
+    this.jeux$ = this.jeuxService.getJeux('asc', 0,0);
     this.le_jeu = this.jeuxService.nblike(this.id);
 
     this.jeux$.subscribe(jeux => {
