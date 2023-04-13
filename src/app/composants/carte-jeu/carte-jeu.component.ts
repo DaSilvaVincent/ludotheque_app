@@ -4,6 +4,7 @@ import {Jeu} from '../../../models/jeu';
 import {JeuxService} from '../../services/jeux.service';
 import {ActivatedRoute} from "@angular/router";
 import {DataSourceAsynchro} from "../tableau-jeu/tableau-jeu.component";
+import {Commentaires} from "../../../models/commentaires";
 
 @Component({
   selector: 'app-carte-jeu',
@@ -24,10 +25,11 @@ import {DataSourceAsynchro} from "../tableau-jeu/tableau-jeu.component";
           <br>
           <span class="like"> likes: {{jeu.nb_likes}}</span>
           <br>
-          <span class="like"> notes: {{note}}</span>
+          <span class="note"> notes: {{this.getNotes(jeu.commentaires)}}</span>
 
         </mat-card-content>
       </mat-card>
+      <button (click)="test()">test</button>
     </div>
   `,
   styles: [
@@ -49,15 +51,13 @@ export class CarteJeuComponent implements OnInit {
 
   private jeuxSubject = new BehaviorSubject<Jeu>(<Jeu>{});
   jeux:Jeu[] = []
-note: number | undefined
-  dataSource: DataSourceAsynchro = new DataSourceAsynchro(this.jeuxService)
 
   constructor(private jeuxService: JeuxService,private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.jeux$ = this.jeuxService.getJeux('asc', 2);
+    this.jeux$ = this.jeuxService.getJeux('asc', 0,0);
     this.le_jeu = this.jeuxService.nblike(this.id);
 
     this.jeux$.subscribe(jeux => {
@@ -65,14 +65,15 @@ note: number | undefined
         this.jeuxService.showJeu(value.id).subscribe(value2 => {
           this.jeuxSubject.next(value2);
           this.jeux.push(this.jeuxSubject.value);
-
-          this.jeuxService.noteJeu(value.id).subscribe((notes: Record<string, any>) => {
-            const notesArray = Object.values(notes).map(commentaire => commentaire.note);
-            this.note = notesArray.reduce((total, note) => total + note, 0) / notesArray.length;
-          });
         });
       });
     });
+  }
+
+  getNotes(commentaire:Commentaires[]) {
+    let somme = 0
+    commentaire.forEach(comment => somme+=comment.note)
+    return somme
   }
 
 
@@ -82,6 +83,6 @@ note: number | undefined
   }
 
   test() {
-    console.log(this.jeux)
+    console.log("")
   }
 }
