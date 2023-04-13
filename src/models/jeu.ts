@@ -1,3 +1,6 @@
+import {Achats} from "./achats";
+import {Commentaires} from "./commentaires";
+
 export interface Jeu {
   id: number;
   nom: string;
@@ -15,4 +18,6 @@ export interface Jeu {
   nb_likes: number;
   jeu:Jeu
   note: number
+  achats:Achats[]
+  commentaires:Commentaires[]
 }

@@ -33,10 +33,11 @@ export class JeuxService {
     );
   }
 
-  getJeux(sort: string = 'asc', nb_joueur_min: number = 2): Observable<Jeu[]> {
+  getJeux(sort: string, age_min: number, nb_joueur_min: number): Observable<Jeu[]> {
     const url = 'http://127.0.0.1:8000/api/jeu/indexAdherent';
     let params = new HttpParams();
     params = params.append('sort', sort);
+    params = params.append('age_min', age_min);
     params = params.append('nb_joueur_min', nb_joueur_min);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -230,5 +231,4 @@ export class JeuxService {
       }),
     );
   }
-
 }

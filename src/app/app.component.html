@@ -23,7 +23,7 @@
         Déconnexion
       </button>
 
-      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/profil']" >
+      <button *ngIf="auth.isLoggedIn$ | async" mat-button routerLinkActive="mat-warn"[routerLink]="['/profil',auth.userValue.id]" >
         <mat-icon>account_circle</mat-icon>
         Profil
       </button>
@@ -42,8 +42,9 @@
         <mat-icon>library_add</mat-icon>
         Creation jeu
       </button>
-        <a *ngIf="auth.user$ | async as user">{{ user.nom }}</a>
-        <a *ngIf="auth.user$ | async as user">{{ user.prenom }}</a>
+        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.nom }}</a>
+        <a *ngIf="auth.isLoggedIn$ | async" >{{ auth.userValue.prenom }}</a>
+        <a *ngIf="auth.isLoggedIn$ | async" ><img src="http://localhost:8000/storage/public/{{auth.userValue.avatar}}"></a>
     </mat-toolbar>
   </p>
   <router-outlet></router-outlet>

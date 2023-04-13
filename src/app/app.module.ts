@@ -1,6 +1,5 @@
 import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,21 +24,23 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {AuthInterceptor} from "./services/auth.interceptor";
 import { RegisterComponent } from './register.component';
 import {MatSelectModule} from "@angular/material/select";
-
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FooterComponent } from './composants/footer/footer.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { PageNotFoundComponent } from './composants/page-not-found/page-not-found.component';
+import { ProfilAdherentComponent } from './profil-adherent/profil-adherent.component';
+import { ModificationProfilComponent } from './modification-profil/modification-profil.component';
 import {CreationJeuComponent} from "./composants/creation-jeu.component";
 import {ModificationJeuComponent} from "./composants/modification-jeu.component";
 import {ImageUploadComponent} from "./composants/image-upload.component";
 import { TableauJeuComponent } from './composants/tableau-jeu/tableau-jeu.component';
 import { CarteJeuComponent } from './composants/carte-jeu/carte-jeu.component';
+import { ModificationAvatarProfilComponent } from './modification-avatar-profil/modification-avatar-profil.component';
+import {DetailsJeuComponent} from "./composants/details-jeu.component";
 
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
-
 
 @NgModule({
   declarations: [
@@ -49,11 +50,16 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     RegisterComponent,
     FooterComponent,
     PageNotFoundComponent,
+    ProfilAdherentComponent,
+    ModificationProfilComponent,
     CreationJeuComponent,
     ModificationJeuComponent,
     ImageUploadComponent,
     TableauJeuComponent,
-    CarteJeuComponent
+    CarteJeuComponent,
+    ModificationAvatarProfilComponent,
+    DetailsJeuComponent
+
   ],
   imports: [
     BrowserModule,
