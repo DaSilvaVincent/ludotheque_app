@@ -90,6 +90,7 @@ export class DataSourceAsynchro extends DataSource<Jeu> {
       console.log("in setdata",jeux)
     });
  }
+
   setNbLike(){
    this.jeuxService.nblike(4).subscribe(nb => {
      this.jeuxSubject.next(nb)

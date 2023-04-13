@@ -24,7 +24,8 @@ import {DataSourceAsynchro} from "../tableau-jeu/tableau-jeu.component";
           <br>
           <span class="like"> likes: {{jeu.nb_likes}}</span>
           <br>
-          <span class="like"> note {{averageNote}}</span>
+          <span class="like"> notes: {{note}}</span>
+
         </mat-card-content>
       </mat-card>
     </div>
@@ -43,13 +44,12 @@ export class CarteJeuComponent implements OnInit {
   jeux$: Observable<Jeu[]> | undefined;
   le_jeu: Observable<Jeu[]> = <Observable<Jeu[]>>{};
 
-  averageNote: number = 0 ;
 
   id: number = +(this.route.snapshot.paramMap.get('id') || 0);
 
   private jeuxSubject = new BehaviorSubject<Jeu>(<Jeu>{});
   jeux:Jeu[] = []
-
+note: number | undefined
   dataSource: DataSourceAsynchro = new DataSourceAsynchro(this.jeuxService)
 
   constructor(private jeuxService: JeuxService,private route: ActivatedRoute) {
@@ -58,20 +58,23 @@ export class CarteJeuComponent implements OnInit {
 
   ngOnInit(): void {
     this.jeux$ = this.jeuxService.getJeux('asc', 2);
-    this.le_jeu = this.jeuxService.nblike(this.id)
-    this.jeuxService.noteJeu(this.id).subscribe((notes: Record<string, any>) => {
-      const notesArray = Object.values(notes).map(commentaire => commentaire.note);
-      this.averageNote = notesArray.reduce((total, note) => total + note, 0) / notesArray.length;
-    });
+    this.le_jeu = this.jeuxService.nblike(this.id);
+
     this.jeux$.subscribe(jeux => {
       jeux.forEach(value => {
         this.jeuxService.showJeu(value.id).subscribe(value2 => {
           this.jeuxSubject.next(value2);
-          this.jeux.push(this.jeuxSubject.value)
+          this.jeux.push(this.jeuxSubject.value);
+
+          this.jeuxService.noteJeu(value.id).subscribe((notes: Record<string, any>) => {
+            const notesArray = Object.values(notes).map(commentaire => commentaire.note);
+            this.note = notesArray.reduce((total, note) => total + note, 0) / notesArray.length;
+          });
         });
       });
     });
   }
+
 
   nombreLikes(id:number) {
     this.le_jeu= this.jeuxService.nblike(id);
