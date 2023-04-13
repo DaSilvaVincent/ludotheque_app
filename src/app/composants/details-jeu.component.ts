@@ -76,10 +76,11 @@ import {AuthService} from "../services/auth.service";
       <tr mat-header-row *matHeaderRowDef="lesColonnes"></tr>
       <tr mat-row *matRowDef="let row; columns: lesColonnes;"></tr>
     </table>
-    <button (click)="test()">LE TEST</button>
+    <button mat-raised-button [routerLink]="['/gestionCommentaires', this.id]" >Gestion des commentaires</button>
   `,
   styles: [
     'table {width: 100%;border-collapse: collapse;font-family: Arial, sans-serif;}',
+    'button {display: block; margin: auto;}'
   ]
 })
 export class DetailsJeuComponent implements OnInit {
@@ -112,9 +113,5 @@ export class DetailsJeuComponent implements OnInit {
     let coms:string[] = []
     this.datasource.commentaires.forEach(value => coms.push(value.commentaire+" "))
     return coms
-  }
-  test() {
-    this.datasource.achats.forEach(value => console.log(value.prix))
-
   }
 }

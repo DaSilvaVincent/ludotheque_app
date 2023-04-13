@@ -39,6 +39,7 @@ import { TableauJeuComponent } from './composants/tableau-jeu/tableau-jeu.compon
 import { CarteJeuComponent } from './composants/carte-jeu/carte-jeu.component';
 import { ModificationAvatarProfilComponent } from './modification-avatar-profil/modification-avatar-profil.component';
 import {DetailsJeuComponent} from "./composants/details-jeu.component";
+import {GestionCommentairesComponent} from "./composants/gestion-commentaires.component";
 
 registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
 
@@ -58,7 +59,8 @@ registerLocaleData(localeFr, 'fr-FR', localeEnExtra);
     TableauJeuComponent,
     CarteJeuComponent,
     ModificationAvatarProfilComponent,
-    DetailsJeuComponent
+    DetailsJeuComponent,
+    GestionCommentairesComponent
 
   ],
   imports: [

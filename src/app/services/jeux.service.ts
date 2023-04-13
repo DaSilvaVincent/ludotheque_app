@@ -6,6 +6,7 @@ import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
 import {JeuRequest} from "../../models/JeuRequest";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Commentaires} from "../../models/commentaires";
 
 @Injectable({
   providedIn: 'root'
@@ -213,22 +214,35 @@ export class JeuxService {
     );
   }
 
-  noteJeu(id: number) {
-    const url = `http://127.0.0.1:8000/api/jeu/showJeu/${id}`;
-    const httpOptions = {
+  createCommentaire(request: Commentaires): Observable<Commentaires> {
+    console.log(request)
+    return this.http.post<any>(`${environment.apiUrl}/commentaires/createCommentaire`, {
+      commentaire: request.commentaire,
+      date_com: request.date_com,
+      note: request.note,
+      jeu_id: request.jeu_id,
+      user_id: request.user_id
+    }, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        //'Authorization': 'Bearer ' + this.authService.userValue.jwtToken
+        'Accept': 'application/json'
+      })
+    }).pipe(
+      map(rep => {
+        const commentaire = {...rep.comment};
+        this.snackbar.open(`Creation du commentaire avec succes`, 'Close', {
+          duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+        })
+        return commentaire;
       }),
-    };
-    return this.http.get<any>(url, httpOptions).pipe(
-      tap(rep=> console.log(rep)),
-      map(res => res.commentaires),
+      shareReplay(),
       catchError(err => {
-        console.log('Erreur http : ', err);
-        return of([]);
-      }),
-    );
+        console.log(err);
+        this.snackbar.open(`Creation du commentaire invalide ${err.error.message}`, 'Close', {
+          duration: 3000, horizontalPosition: 'right', verticalPosition: 'top'
+        })
+        throw new Error(`create result : ${err}`)
+      })
+    )
   }
 }

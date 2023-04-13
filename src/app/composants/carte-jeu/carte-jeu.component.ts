@@ -29,7 +29,6 @@ import {Commentaires} from "../../../models/commentaires";
 
         </mat-card-content>
       </mat-card>
-      <button (click)="test()">test</button>
     </div>
   `,
   styles: [
@@ -77,12 +76,4 @@ export class CarteJeuComponent implements OnInit {
   }
 
 
-  nombreLikes(id:number) {
-    this.le_jeu= this.jeuxService.nblike(id);
-
-  }
-
-  test() {
-    console.log("")
-  }
 }
