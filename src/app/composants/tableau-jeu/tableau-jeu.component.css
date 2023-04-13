@@ -1,1 +1,7 @@
-table {margin: auto auto; min-width: 600px}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+
