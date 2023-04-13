@@ -41,6 +41,14 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
           <td mat-cell *matCellDef="let element"> {{element.theme_id}}  </td>
         </ng-container>
 
+        <!-- details Column -->
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef>details</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon [routerLink]="['/detailsJeu', element.id]">loupe</mat-icon>
+          </td>
+        </ng-container>
+
         <!-- modification Column -->
         <ng-container matColumnDef="modification">
           <th mat-header-cell *matHeaderCellDef>modification</th>
@@ -99,7 +107,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class TableauJeuComponent implements OnInit {
 
   les_jeux: Jeu [] = [];
-  lesColonnes = ["nom","description","langue","categorie_id","theme_id","modification","modif url_media"]
+  lesColonnes = ["nom","description","langue","categorie_id","theme_id","details","modification","modif url_media"]
   dataSource: DataSourceAsynchro = new DataSourceAsynchro(this.jeuxService)
   cpt = 0
 
