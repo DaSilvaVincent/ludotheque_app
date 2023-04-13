@@ -6,6 +6,7 @@ export interface User {
   pseudo:string;
   email: string;
   jwtToken?: string;
+  avatar: string;
 }
 
 export const ANONYMOUS_USER: User = <User>{};

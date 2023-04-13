@@ -15,4 +15,5 @@ export interface AdherentRequest {
   prenom: string;
   pseudo:string;
   password: string;
+  avatar: string;
 }
