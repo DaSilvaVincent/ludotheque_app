@@ -170,4 +170,24 @@ export class JeuxService {
         })
       )
   }
+
+  showJeu(id: number):
+    Observable<Jeu> {
+    const url = `${environment.apiUrl}/jeu/showJeu/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.get<any>(url, httpOptions)
+      .pipe(
+        map(res => res),
+        catchError(err => {
+          console.log('Erreur http : ', err);
+          return of();
+        }),
+      );
+  }
+
 }

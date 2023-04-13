@@ -1,3 +1,6 @@
+import {Achats} from "./achats";
+import {Commentaires} from "./commentaires";
+
 export interface Jeu {
   id: number;
   nom: string;
@@ -12,4 +15,8 @@ export interface Jeu {
   categorie_id: number;
   theme_id: number;
   editeur_id: number;
+  nb_likes: number;
+  jeu:Jeu
+  achats:Achats[]
+  commentaires:Commentaires[]
 }

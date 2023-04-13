@@ -4,82 +4,117 @@ import {JeuxService} from "../services/jeux.service";
 import {DataSource} from "@angular/cdk/collections";
 import {Jeu} from "../../models/jeu";
 import {ActivatedRoute} from "@angular/router";
+import {Achats} from "../../models/achats";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-accueil',
   template: `
-    <table mat-table [dataSource]="[le_jeu]" class="mat-elevation-z8">
+    <table mat-table [dataSource]="[datasource]" class="mat-elevation-z8">
 
-      <!-- id Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> id </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].id}} </td>
+      <!-- url_media Column -->
+      <ng-container matColumnDef="url_media">
+        <th mat-header-cell *matHeaderCellDef> image </th>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.url_media}} </td>
       </ng-container>
 
       <!-- nom Column -->
       <ng-container matColumnDef="nom">
         <th mat-header-cell *matHeaderCellDef> nom </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].nom}}</td>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.nom}}</td>
       </ng-container>
 
       <!-- description Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> description </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].description}}</td>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.description}}</td>
       </ng-container>
 
       <!-- langue Column -->
       <ng-container matColumnDef="langue">
         <th mat-header-cell *matHeaderCellDef> langue </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].langue}}</td>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.langue | slice:0:2}}</td>
       </ng-container>
 
-      <!-- age_min Column -->
-      <ng-container matColumnDef="age_min">
-        <th mat-header-cell *matHeaderCellDef> age_min </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].age_min}}</td>
+      <!-- categorie Column -->
+      <ng-container matColumnDef="categorie">
+        <th mat-header-cell *matHeaderCellDef> categorie </th>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.categorie_id}}</td>
       </ng-container>
 
-      <!-- nb_joueurs_min Column -->
-      <ng-container matColumnDef="nb_joueurs_min">
-        <th mat-header-cell *matHeaderCellDef> nb_joueurs_min </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].nombre_joueurs_min}}</td>
+      <!-- theme Column -->
+      <ng-container matColumnDef="theme">
+        <th mat-header-cell *matHeaderCellDef> theme </th>
+        <td mat-cell *matCellDef="let element"> {{datasource.jeu.theme_id}}</td>
       </ng-container>
 
-      <!-- nb_joueurs_max Column -->
-      <ng-container matColumnDef="nb_joueurs_max">
-        <th mat-header-cell *matHeaderCellDef> nb_joueurs_max </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].nombre_joueurs_max}}</td>
+      <!-- note Column -->
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef> note </th>
+        <td mat-cell *matCellDef="let element"> {{noteMoy()}}</td>
       </ng-container>
 
-      <!-- duree_partie Column -->
-      <ng-container matColumnDef="duree_partie">
-        <th mat-header-cell *matHeaderCellDef> duree_partie </th>
-        <td mat-cell *matCellDef="let element"> {{element[0].duree_partie}}  </td>
+      <!-- nb_likes Column -->
+      <ng-container matColumnDef="nb_likes">
+        <th mat-header-cell *matHeaderCellDef> nb_likes </th>
+        <td mat-cell *matCellDef="let element"> {{datasource.nb_likes}}  </td>
+      </ng-container>
+
+      <!-- prixMoy Column -->
+      <ng-container matColumnDef="prixMoy">
+        <th mat-header-cell *matHeaderCellDef> prixMoy </th>
+        <td mat-cell *matCellDef="let element"> {{prixMoy()}}  </td>
+      </ng-container>
+
+      <!-- commentaires Column -->
+      <ng-container matColumnDef="commentaires">
+        <th mat-header-cell *matHeaderCellDef> commentaires </th>
+        <td mat-cell *matCellDef="let element"> {{lesCommentaires()}} </td>
       </ng-container>
 
       <!-- La ligne -->
       <tr mat-header-row *matHeaderRowDef="lesColonnes"></tr>
       <tr mat-row *matRowDef="let row; columns: lesColonnes;"></tr>
     </table>
-
+    <button (click)="test()">LE TEST</button>
   `,
   styles: [
-    ':host { display: flex; justify-content: center; margin: 100px 0;}',
+    'table {width: 100%;border-collapse: collapse;font-family: Arial, sans-serif;}',
   ]
 })
 export class DetailsJeuComponent implements OnInit {
 
   id: number = +(this.route.snapshot.paramMap.get('id') || 0);
-  lesColonnes = ["nom","description","langue","categorie_id","theme_id","details","modification","modif url_media"]
-
+  lesColonnes = ["url_media","nom","description","langue","categorie","theme","note","nb_likes","prixMoy","commentaires"]
   le_jeu
+  datasource = <Jeu>{}
   constructor(private route: ActivatedRoute, public jeuxService:JeuxService) {
-    this.le_jeu = jeuxService.getJeu(this.id)
-    this.le_jeu.subscribe(value => console.log(value))
+    this.le_jeu = jeuxService.showJeu(this.id)
+    this.le_jeu.subscribe(value => this.datasource = value)
   }
 
   ngOnInit(): void {
   }
 
+  prixMoy() {
+    let moy = 0
+    this.datasource.achats.forEach(value => moy+=value.prix)
+    return moy
+  }
+
+  noteMoy() {
+    let moy = 0
+    this.datasource.commentaires.forEach(value => moy+=value.note)
+    return moy
+  }
+
+  lesCommentaires() {
+    let coms:string[] = []
+    this.datasource.commentaires.forEach(value => coms.push(value.commentaire+" "))
+    return coms
+  }
+  test() {
+    this.datasource.achats.forEach(value => console.log(value.prix))
+
+  }
 }
