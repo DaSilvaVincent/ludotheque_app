@@ -177,7 +177,7 @@ export class JeuxService {
   }
 
   nblike(id: number) {
-    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/'+ id;
+    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/' + id;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -194,8 +194,9 @@ export class JeuxService {
       }),
     );
   }
+
   noteJeu(id: number) {
-    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/'+ id;
+    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/' + id;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
