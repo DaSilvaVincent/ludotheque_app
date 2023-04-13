@@ -47,7 +47,6 @@ export class JeuxService {
       params: params
     };
     return this.http.get<any>(url, httpOptions).pipe(
-      tap(rep => console.log(rep)),
       map(res => res.jeux),
       catchError(err => {
         console.log('Erreur http : ', err);
@@ -176,8 +175,27 @@ export class JeuxService {
       )
   }
 
+  showJeu(id: number):
+    Observable<Jeu> {
+    const url = `${environment.apiUrl}/jeu/showJeu/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.get<any>(url, httpOptions)
+      .pipe(
+        map(res => res),
+        catchError(err => {
+          console.log('Erreur http : ', err);
+          return of();
+        }),
+      );
+  }
+
   nblike(id: number) {
-    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/'+ id;
+    const url = `http://127.0.0.1:8000/api/jeu/showJeu/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -186,7 +204,6 @@ export class JeuxService {
       }),
     };
     return this.http.get<any>(url, httpOptions).pipe(
-      tap(rep => console.log(rep)),
       map(res => res.nb_likes),
       catchError(err => {
         console.log('Erreur http : ', err);
@@ -195,7 +212,7 @@ export class JeuxService {
     );
   }
   noteJeu(id: number) {
-    const url = 'http://127.0.0.1:8000/api/jeu/showJeu/'+ id;
+    const url = `http://127.0.0.1:8000/api/jeu/showJeu/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -204,7 +221,6 @@ export class JeuxService {
       }),
     };
     return this.http.get<any>(url, httpOptions).pipe(
-      tap(rep => console.log(rep)),
       map(res => res.commentaires),
       catchError(err => {
         console.log('Erreur http : ', err);
