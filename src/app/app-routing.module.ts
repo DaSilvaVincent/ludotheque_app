@@ -10,6 +10,7 @@ import {CreationJeuComponent} from "./composants/creation-jeu.component";
 import {ModificationJeuComponent} from "./composants/modification-jeu.component";
 import {ImageUploadComponent} from "./composants/image-upload.component";
 import {TableauJeuComponent} from "./composants/tableau-jeu/tableau-jeu.component";
+import {ModificationAvatarProfilComponent} from "./modification-avatar-profil/modification-avatar-profil.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil', pathMatch: 'full'},

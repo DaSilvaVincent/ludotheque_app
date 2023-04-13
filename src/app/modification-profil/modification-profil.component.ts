@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../services/user.service";
@@ -23,7 +23,7 @@ import {CustomValidators} from "../services/customValidator";
               Le nom est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="nom?.hasError('minLength') || nom?.hasError('maxLength')">
+              *ngIf="nom?.hasError('minlength') || nom?.hasError('maxlength')">
               Le nom doit etre compris entre 5 et 50 caracteres
             </mat-error>
           </mat-form-field>
@@ -35,7 +35,7 @@ import {CustomValidators} from "../services/customValidator";
               Le prenom est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="prenom?.hasError('minLength') || prenom?.hasError('maxLength')">
+              *ngIf="prenom?.hasError('minlength') || prenom?.hasError('maxlength')">
               Le prenom doit etre compris entre 5 et 50 caracteres
             </mat-error>
           </mat-form-field>
@@ -47,7 +47,7 @@ import {CustomValidators} from "../services/customValidator";
               Le login est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="login?.hasError('minLength') || login?.hasError('maxLength')">
+              *ngIf="login?.hasError('minlength') || login?.hasError('maxlength')">
               Le login doit etre compris entre 5 et 50 caracteres
             </mat-error>
           </mat-form-field>
@@ -59,7 +59,7 @@ import {CustomValidators} from "../services/customValidator";
               Le pseudo est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="pseudo?.hasError('minLength') || pseudo?.hasError('maxLength')">
+              *ngIf="pseudo?.hasError('minlength') || pseudo?.hasError('maxlength')">
               Le pseudo doit etre compris entre 5 et 50 caracteres
             </mat-error>
           </mat-form-field>
@@ -74,7 +74,7 @@ import {CustomValidators} from "../services/customValidator";
               Doit être une adresse mail valide
             </mat-error>
             <mat-error
-              *ngIf="email?.hasError('minLength') || email?.hasError('maxLength')">
+              *ngIf="email?.hasError('minlength') || email?.hasError('maxlength')">
               L'email doit etre compris entre 5 et 50 caracteres
             </mat-error>
             <mat-error
@@ -83,6 +83,9 @@ import {CustomValidators} from "../services/customValidator";
             </mat-error>
           </mat-form-field>
 
+          <p>Avatar :</p>
+          <app-modification-avatar-profil></app-modification-avatar-profil>
+
           <mat-form-field>
             <input type="password" matInput placeholder="Password" formControlName="password" value="{{this.infosUser.password}}">
             <mat-error
@@ -90,7 +93,7 @@ import {CustomValidators} from "../services/customValidator";
               Le mot de passe est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="password?.hasError('minLength') || password?.hasError('maxLength')">
+              *ngIf="password?.hasError('minlength') || password?.hasError('maxlength')">
               Le mot de passe doit etre compris entre 5 et 50 caracteres
             </mat-error>
           </mat-form-field>
@@ -102,14 +105,15 @@ import {CustomValidators} from "../services/customValidator";
               La confirmation du mot de passe est obligatoire
             </mat-error>
             <mat-error
-              *ngIf="updateForm.hasError('minLength', 'passwordConfirm') || updateForm.hasError('maxLength', 'passwordConfirm')">
+              *ngIf="updateForm.hasError('minlength', 'passwordConfirm') || updateForm.hasError('maxlength', 'passwordConfirm')">
               La confirmation du mot de passe doit etre compris entre 5 et 50 caracteres
             </mat-error>
-            <mat-error
-              *ngIf="updateForm.hasError('notSame')">
-              Les mots de passe ne correspondent pas
-            </mat-error>
           </mat-form-field>
+
+          <mat-error
+            *ngIf="passwordConfirm?.dirty && updateForm.hasError('passwordsNotMatching')">
+            Les mots de passe saisis ne sont pas identiques !
+          </mat-error>
 
           <div class="button">
             <button type="reset" mat-button>Annuler</button>
@@ -123,6 +127,7 @@ import {CustomValidators} from "../services/customValidator";
   </div>
   `,
   styles: [':host { display: flex; justify-content: center; margin: 100px 0;}',
+    'p { display: flex; justify-content: center; margin: 100px 0; font-size: 32px;}',
     'mat-card {  max-width: 600px;}',
     'mat-card-title, mat-card-content { display: flex; justify-content: center;}',
     'mat-form-field { width: 100%; min-width: 300px; }',
@@ -187,5 +192,9 @@ export class ModificationProfilComponent implements OnInit {
   }
   get password() {
     return this.updateForm.get('password');
+  }
+
+  get passwordConfirm(){
+    return this.updateForm.get('passwordConfirm');
   }
 }

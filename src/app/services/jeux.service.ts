@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, map, Observable, of, shareReplay} from "rxjs";
+import {catchError, map, Observable, of, shareReplay, tap} from "rxjs";
 import {Jeu} from "../../models/jeu";
 import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
