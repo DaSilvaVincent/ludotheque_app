@@ -15,7 +15,7 @@ import {AuthService} from "../services/auth.service";
       <!-- url_media Column -->
       <ng-container matColumnDef="url_media">
         <th mat-header-cell *matHeaderCellDef> image </th>
-        <td mat-cell *matCellDef="let element"> {{datasource.jeu.url_media}} </td>
+        <td mat-cell *matCellDef="let element"><img src="http://localhost:8000/storage/public/{{datasource.jeu.url_media}}"></td>
       </ng-container>
 
       <!-- nom Column -->
