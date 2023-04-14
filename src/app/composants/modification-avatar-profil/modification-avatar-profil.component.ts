@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {AdherentRequest} from "../../models/interface";
+import {AdherentRequest} from "../../../models/interface";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../services/user.service";
+import {UserService} from "../../services/user.service";
 import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-modification-avatar-profil',

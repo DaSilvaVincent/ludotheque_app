@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../services/user.service";
-import {AdherentRequest} from "../../models/interface";
+import {UserService} from "../../services/user.service";
+import {AdherentRequest} from "../../../models/interface";
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import {CustomValidators} from "../services/customValidator";
+import {CustomValidators} from "../../services/customValidator";
 
 @Component({
   selector: 'app-modification-profil',
@@ -82,9 +82,6 @@ import {CustomValidators} from "../services/customValidator";
               L'email doit etre unique
             </mat-error>
           </mat-form-field>
-
-          <p>Avatar :</p>
-          <app-modification-avatar-profil></app-modification-avatar-profil>
 
           <mat-form-field>
             <input type="password" matInput placeholder="Password" formControlName="password" value="{{this.infosUser.password}}">

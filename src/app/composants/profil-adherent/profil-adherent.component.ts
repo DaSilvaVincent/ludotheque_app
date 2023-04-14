@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {AuthService} from "../services/auth.service";
-import {UserService} from "../services/user.service";
-import {AdherentRequest} from "../../models/interface";
+import {AuthService} from "../../services/auth.service";
+import {UserService} from "../../services/user.service";
+import {AdherentRequest} from "../../../models/interface";
 
 @Component({
   selector: 'app-profil-adherent',

@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "./services/auth.service";
-import {RegisterRequest} from "../models/interface";
-import {CustomValidators} from "./services/customValidator";
+import {AuthService} from "../services/auth.service";
+import {RegisterRequest} from "../../models/interface";
+import {CustomValidators} from "../services/customValidator";
 import {tap} from "rxjs";
 
 @Component({

@@ -1,0 +1,13 @@
+# Etape 1 : Construire l'application Angular en mode de production
+FROM node:lts as node
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+RUN ng config -g cli.warnings.versionMismatch false
+RUN ng build --configuration production --optimization false
+
+# Etape 2 : Utiliser une image de base Nginx pour servir l'application construite
+FROM nginx as runtime
+COPY --from=node /app/dist/ /usr/share/nginx/html
