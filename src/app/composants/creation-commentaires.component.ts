@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {JeuxService} from "../services/jeux.service";
-import {Jeu} from "../../models/jeu";
+import {CommentairesService} from "../services/commentaires.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {JeuRequest} from "../../models/JeuRequest";
-import {tap} from "rxjs";
 import {AuthService} from "../services/auth.service";
 import {Commentaires} from "../../models/commentaires";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-gestion-commentaires',
@@ -14,7 +12,7 @@ import {Commentaires} from "../../models/commentaires";
     <mat-card>
       <mat-card-title>Commentaire</mat-card-title>
       <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="creation()">
+        <form [formGroup]="form" (ngSubmit)="creation()" (reset)="annuler()">
           <mat-form-field>
             <input type="text" matInput placeholder="Le commentaire" formControlName="commentaire">
             <mat-error
@@ -35,6 +33,8 @@ import {Commentaires} from "../../models/commentaires";
             </mat-error>
           </mat-form-field>
           <div class="button">
+            <button type="reset" mat-button>Annuler</button>
+
             <button type="submit" mat-button [disabled]="!form.valid">Creation</button>
           </div>
         </form>
@@ -45,7 +45,7 @@ import {Commentaires} from "../../models/commentaires";
 
   ]
 })
-export class GestionCommentairesComponent implements OnInit {
+export class CreationCommentairesComponent implements OnInit {
 
   id: number = +(this.route.snapshot.paramMap.get('id') || 0);
 
@@ -57,7 +57,7 @@ export class GestionCommentairesComponent implements OnInit {
     user_id: new FormControl(this.authService.userValue.id),
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, public jeuxService:JeuxService,private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, public commentaireService:CommentairesService,private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -75,14 +75,13 @@ export class GestionCommentairesComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    this.jeuxService.createCommentaire(<Commentaires>{...this.form.value}).pipe().subscribe();
-    this.form.setValue({
-      commentaire:null,
-      date_com:Date.now(),
-      note:null,
-      jeu_id:this.id,
-      user_id:this.authService.userValue.id
-    })
+    this.commentaireService.createCommentaire(<Commentaires>{...this.form.value}).pipe(
+      tap(() => this.router.navigate(['detailsJeu',this.id]))
+    ).subscribe();
+  }
+
+  annuler() {
+    this.router.navigate(['detailsJeu',this.id])
   }
 }
 
