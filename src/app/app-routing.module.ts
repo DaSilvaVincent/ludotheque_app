@@ -13,7 +13,9 @@ import {TableauJeuComponent} from "./composants/tableau-jeu/tableau-jeu.componen
 import {CarteJeuComponent} from "./composants/carte-jeu/carte-jeu.component";
 import {ModificationAvatarProfilComponent} from "./composants/modification-avatar-profil/modification-avatar-profil.component";
 import {DetailsJeuComponent} from "./composants/details-jeu.component";
-import {GestionCommentairesComponent} from "./composants/gestion-commentaires.component";
+import {CreationCommentairesComponent} from "./composants/creation-commentaires.component";
+import {ModificationCommentaireComponent} from "./composants/modification-commentaire.component";
+import {SuppressionCommentaireComponent} from "./composants/suppression-commentaire.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'accueil', pathMatch: 'full'},
@@ -23,7 +25,9 @@ const routes: Routes = [
   {path: 'profil/:id', component: ProfilAdherentComponent},
   {path: 'profil-edit/:id', component: ModificationProfilComponent},
   {path: 'detailsJeu/:id', component: DetailsJeuComponent},
-  {path: 'gestionCommentaires/:id', component: GestionCommentairesComponent},
+  {path: 'creationCommentaires/:id', component: CreationCommentairesComponent},
+  {path: 'modificationCommentaire/:idJ/:idC', component: ModificationCommentaireComponent},
+  {path: 'suppressionCommentaire/:idJ/:idC', component: SuppressionCommentaireComponent},
   {path: 'creationJeu', component: CreationJeuComponent},
   {path: 'modificationJeu/:id', component: ModificationJeuComponent},
   {path: 'imageUpload/:id', component: ImageUploadComponent},

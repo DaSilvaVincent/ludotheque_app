@@ -1,5 +1,4 @@
-export interface Commentaires {
-  id:number
+export interface CommentairesRequest {
   commentaire:string
   date_com:Date
   note:number
