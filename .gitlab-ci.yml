@@ -33,7 +33,6 @@ linting:
       name: "${URL_DOCKERHUB}/${USER_LOGIN}/${CI_PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}"
       entrypoint: [""]
     script:
-      - cp package*.json ./
       - npm install
       - npx eslint src/models/jeu.ts
     when: manual
