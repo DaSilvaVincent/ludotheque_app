@@ -3,10 +3,18 @@ variables:
   URL_REGISTRE_IMAGE: "registre.priv.iutdelens.ovh"
   URL_DOCKERHUB: "dockerhub.priv.iutdelens.ovh"
   USER_LOGIN: "vincent.dasilva"
+  NEXUS_USER: "vincent.dasilva"
+  NEXUS_PWD: "LePwd"
+  URL_REGISTRE: "registre.priv.iutdelens.ovh"
+  IMAGE: "<vincent.dasilva>"
+  URL_WEBSITE: "v3tClient.priv.iutdelens.ovh"
+
 
 stages:
   - build
+  - test
   - linting
+  - deploy
 
 build:
   stage: build
@@ -35,6 +43,23 @@ linting:
     script:
       - npm install
       - npx eslint src/models/jeu.ts
+    when: manual
+
+
+deploy:
+    image: dockerhub.priv.iutdelens.ovh/vdasilva/nomad-deployer:latest
+    stage: deploy
+    tags:
+        - sae-s4a01
+    script:
+        - CI_PROJECT_NAME=developpement_application_s4a01_p2
+        - export NOMAD_ADDR=http://172.18.38.46:4646/
+        - envsubst '${CI_PROJECT_NAME} ${CI_COMMIT_SHORT_SHA} ${NEXUS_USER} ${$NEXUS_PWD} ${URL_REGISTRE} ${IMAGE} ${URL_WEBSITE}' < project.nomad > job.nomad
+        - nomad validate job.nomad
+        - nomad plan job.nomad || if [ $? -eq 255 ]; then exit 255; else echo "success"; fi
+        - nomad run job.nomad
+    rules:
+        - if: '$CI_COMMIT_REF_NAME == "main"'
     when: manual
 
 
