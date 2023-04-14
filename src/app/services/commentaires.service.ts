@@ -64,7 +64,7 @@ export class CommentairesService {
       .pipe(
         map(rep => {
           const comment = {...rep.comment};
-          this.snackbar.open(`Modification du commetaire avec succes`, 'Close', {
+          this.snackbar.open(`Modification du commentaire avec succes`, 'Close', {
             duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
           })
           return comment;

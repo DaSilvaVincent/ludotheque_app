@@ -1,14 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {JeuxService} from "../services/jeux.service";
-import {JeuRequest} from "../../models/JeuRequest";
-import {BehaviorSubject, Observable, Subscription, tap} from "rxjs";
+import {tap} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Jeu} from "../../models/jeu";
-import {DataSource} from "@angular/cdk/collections";
 import {CommentairesService} from "../services/commentaires.service";
 import {Commentaires} from "../../models/commentaires";
-import {AuthService} from "../services/auth.service";
 import {CommentairesRequest} from "../../models/CommentairesRequest";
 
 @Component({
@@ -69,7 +65,7 @@ export class ModificationCommentaireComponent implements OnInit{
   les_commentaires:Commentaires[] = []
   updateForm = <FormGroup>{}
 
-  constructor(private route: ActivatedRoute,private router: Router,private commentairesService: CommentairesService, private jeuService:JeuxService, private authService: AuthService) {
+  constructor(private route: ActivatedRoute,private router: Router,private commentairesService: CommentairesService, private jeuService:JeuxService) {
     this.le_jeu = this.jeuService.showJeu(this.idJ)
 
 

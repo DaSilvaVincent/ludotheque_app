@@ -6,10 +6,12 @@ import {Jeu} from "../../models/jeu";
 import {ActivatedRoute} from "@angular/router";
 import {Achats} from "../../models/achats";
 import {AuthService} from "../services/auth.service";
+import {Commentaires} from "../../models/commentaires";
 
 @Component({
   selector: 'app-accueil',
   template: `
+    <h2>Infos du jeu</h2>
     <table mat-table [dataSource]="[datasource]" class="mat-elevation-z8">
 
       <!-- url_media Column -->
@@ -71,7 +73,37 @@ import {AuthService} from "../services/auth.service";
       <tr mat-row *matRowDef="let row; columns: lesColonnes;"></tr>
     </table>
     <br>
-    <table mat-table [dataSource]="this.datasource.commentaires" class="mat-elevation-z8">
+    <h2>Vos commentaires</h2>
+    <table mat-table [dataSource]="vos_commentaires(this.datasource.commentaires)" class="mat-elevation-z8">
+      <!-- commentaires Column -->
+      <ng-container matColumnDef="commentaires">
+        <th mat-header-cell *matHeaderCellDef> commentaires </th>
+        <td mat-cell *matCellDef="let element">{{element.commentaire}}</td>
+      </ng-container>
+
+      <!-- modifier Column -->
+      <ng-container matColumnDef="modifier">
+        <th mat-header-cell *matHeaderCellDef>modifier</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon [routerLink]="['/modificationCommentaire', this.id, element.id]">loop</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- supprimer Column -->
+      <ng-container matColumnDef="supprimer">
+        <th mat-header-cell *matHeaderCellDef>supprimer</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon [routerLink]="['/suppressionCommentaire', this.id, element.id]">delete</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- La ligne -->
+      <tr mat-header-row *matHeaderRowDef="['commentaires','modifier','supprimer']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['commentaires','modifier','supprimer'];"></tr>
+    </table>
+    <br>
+    <h2>Les autres commentaires</h2>
+    <table mat-table [dataSource]="commentaires_autres(this.datasource.commentaires)" class="mat-elevation-z8">
       <!-- commentaires Column -->
       <ng-container matColumnDef="commentaires">
         <th mat-header-cell *matHeaderCellDef> commentaires </th>
@@ -115,12 +147,13 @@ export class DetailsJeuComponent implements OnInit {
   lesColonnes = ["url_media","nom","description","langue","categorie","theme","note","nb_likes","prixMoy"]
   le_jeu
   datasource = <Jeu>{}
-  constructor(private route: ActivatedRoute, public jeuxService:JeuxService) {
+
+  constructor(private route: ActivatedRoute, public jeuxService:JeuxService, private authService: AuthService) {
     this.le_jeu = jeuxService.showJeu(this.id)
-    this.le_jeu.subscribe(value => this.datasource = value)
   }
 
   ngOnInit(): void {
+    this.le_jeu.subscribe(value => this.datasource = value)
   }
 
   prixMoy() {
@@ -135,4 +168,21 @@ export class DetailsJeuComponent implements OnInit {
     return moy
   }
 
+  vos_commentaires(commentaires:Commentaires[]) {
+    let comments:Commentaires[] = []
+    commentaires.forEach(commentaire => {
+      if (commentaire.user_id == this.authService.userValue.id)
+        comments.push(commentaire)
+    })
+    return comments
+  }
+
+  commentaires_autres(commentaires:Commentaires[]) {
+    let comments:Commentaires[] = []
+    commentaires.forEach(commentaire => {
+      if (commentaire.user_id != this.authService.userValue.id)
+        comments.push(commentaire)
+    })
+    return comments
+  }
 }
