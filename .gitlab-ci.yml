@@ -1,0 +1,26 @@
+# .gitlab-ci.yml
+variables:
+  URL_REGISTRE_IMAGE: "registre.priv.iutdelens.ovh"
+  URL_DOCKERHUB: "dockerhub.priv.iutdelens.ovh"
+  USER_LOGIN: "vincent.dasilva"
+
+stages:
+  - build
+
+build:
+  stage: build
+  tags:
+    - sae-s4a01
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.2-debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${URL_REGISTRE_IMAGE}\":{\"auth\":\"$(printf "%s:%s" "${USER_LOGIN}" "${PASSWORD_IUT}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${URL_REGISTRE_IMAGE}/${USER_LOGIN}/${CI_PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}"
+  when: manual
+
